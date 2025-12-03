@@ -30,4 +30,11 @@ When conditions persist for a configurable duration, the system saves:
 * __Smart Restart__: Resumes detection after saved clips to avoid duplicates
 * __Multi-video Support__: Processes all MP4 files in a folder sequentially
 * __Visual Feedback__: Live display with processing metrics
-
+## 👥 User Guide
+## Installation
+### Prerequisites
+* Python 3.8+
+* CUDA-compatible GPU (recommended for faster processing)
+### Step-by-Step Setup
+1. Clone/Download the code
+2. Install dependencies:

@@ -120,18 +120,18 @@ Main controller class handling:
 * `model`: YOLO model instance
 * `running`: Control flag for graceful shutdown
 ### Detection Logic
-1. Frame Processing Pipeline
+1. __Frame Processing Pipeline__
 ```
 text
 Read Frame → YOLO Inference → Class Filtering → Spatial Analysis → Condition Tracking → Output Trigger
 ```
-2. Condition Tracking
+2. __Condition Tracking__
 * Each condition gets a unique key based on object positions
 * Tracks persistence across consecutive frames
 * Validates after `validation_time * fps` frames
 * Resets tracking when condition disappears
 
-3. Spatial Analysis Methods
+3. __Spatial Analysis Methods__
 * `calculate_iou()`: Computes overlap ratio between boxes
 * `is_inside_or_overlapping()`: Checks if one box is inside/overlapping another
 * `get_condition_key()`: Creates unique identifier for condition tracking

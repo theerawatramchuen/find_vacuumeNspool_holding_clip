@@ -19,6 +19,7 @@ This system detects specific object interactions in video footage using YOLO obj
 1. __Vacuum Cleaner overlapping/inside Normal People__ (`vacuume_normal`)
 2. __Vacuum Cleaner overlapping/inside Suspected People__ (`vacuume_suspected`)
 3. __Spool overlapping/inside Grove__ (`spool_grove`)
+   
 When conditions persist for a configurable duration, the system saves:
 * Original frame (no overlay)
 * Annotated frame (with bounding boxes)

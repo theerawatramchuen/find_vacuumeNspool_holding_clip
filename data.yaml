@@ -1,0 +1,6 @@
+path: C:/Users/RYZEN/cctv_mon/project_yolov11_obb/splited_dataset
+train: images/train
+val: images/valid
+
+nc: 8
+names: ['normal', 'suspected', 'sitting', 'standing', 'leaning', 'spool', 'vacuume','grove']

@@ -42,3 +42,97 @@ When conditions persist for a configurable duration, the system saves:
 bash
 pip install ultralytics opencv-python pandas numpy
 ```
+3. Download YOLO model:
+* Place your trained model at: `C:\Users\RYZEN\cctv_mon\project_yolov11_obb\runs\detect\train3\weights\best.pt`
+* Or modify MODEL_PATH in the main section
+## Configuration
+Edit these parameters in the main section (lines 308-313):
+```
+python
+MODEL_PATH = r"C:\Users\RYZEN\cctv_mon\project_yolov11_obb\runs\detect\train3\weights\best.pt"
+VIDEO_FOLDER = r"C:\RecordDownload"  # Folder containing .mp4 videos
+CONFIDENCE_THRESHOLD = 0.5  # 0.0 to 1.0 (higher = more confident detections)
+LINE_THICKNESS = 1  # Bounding box thickness
+VALIDATION_TIME = 2.0  # Seconds condition must persist
+```
+## Usage
+### Running the System
+```
+bash
+python find_vacuumeNspool_holding.py
+```
+### Controls During Execution
+* `q`: Quit processing
+* `Space`: Pause/resume video
+* __Window Close__: Exit program
+### Processing Flow
+1. System loads all .mp4 files from VIDEO_FOLDER
+2. Processes each video sequentially
+3. Displays real-time detection with overlay
+4. Saves detections when conditions meet validation criteria
+5. Automatically moves to next video when complete
+## Output Files
+### Directory Structure
+```
+text
+vacuume-spool/
+├── 20231201-143045-12-O.jpg      # Original frame (no overlay)
+├── 20231201-143045-12-R.jpg      # Result frame (with bounding boxes)
+├── 20231201-143045-12.mp4        # 120-second video clip
+└── ...
+```
+### File Naming Convention
+```
+text
+YYYYMMDD-HHMMSS-milliseconds-type.ext
+```
+* __O__: Original frame
+* __R__: Result frame (with annotations)
+* __.mp4__: Video clip (no annotations)
+### Video Clip Details
+* Duration: 120 seconds total
+* Positioning: Detection at center (60s before, 60s after)
+* Content: Original video frames, no overlays
+* Format: MP4 with same encoding as source
+## 👨‍💻 Developer Guide
+### Architecture
+```
+text
+DetailedVideoYOLOInference
+├── __init__()                    # Initialize model and parameters
+├── process_video_file()          # Main video processing loop
+├── process_detections()          # Core detection logic
+├── save_video_clip()             # Save 120-second clips
+├── is_inside_or_overlapping()    # Spatial relationship check
+└── calculate_iou()              # Intersection-over-Union calculation
+```
+### Key Classes
+`DetailedVideoYOLOInference`
+Main controller class handling:
+* Model loading and inference
+* Video processing pipeline
+* Condition tracking and validation
+* File output management
+
+### Key Attributes:
+* `condition_frames`: Tracks condition persistence across frames
+* `validated_conditions`: Set of validated conditions
+* `model`: YOLO model instance
+* `running`: Control flag for graceful shutdown
+### Detection Logic
+1. Frame Processing Pipeline
+```
+text
+Read Frame → YOLO Inference → Class Filtering → Spatial Analysis → Condition Tracking → Output Trigger
+```
+2. Condition Tracking
+* Each condition gets a unique key based on object positions
+* Tracks persistence across consecutive frames
+* Validates after `validation_time * fps` frames
+* Resets tracking when condition disappears
+
+3. Spatial Analysis Methods
+* `calculate_iou()`: Computes overlap ratio between boxes
+* `is_inside_or_overlapping()`: Checks if one box is inside/overlapping another
+* `get_condition_key()`: Creates unique identifier for condition tracking
+

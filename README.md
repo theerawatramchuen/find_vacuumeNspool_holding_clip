@@ -135,4 +135,64 @@ Read Frame → YOLO Inference → Class Filtering → Spatial Analysis → Condi
 * `calculate_iou()`: Computes overlap ratio between boxes
 * `is_inside_or_overlapping()`: Checks if one box is inside/overlapping another
 * `get_condition_key()`: Creates unique identifier for condition tracking
-
+## Extension Guide
+### Adding New Detection Conditions
+1. __Modify__ `process_detections()` __method:__
+```
+python
+# Example: Add "tool in/overlapping machine"
+if 'tool' in detections_by_class and 'machine' in detections_by_class:
+    for tool_det in detections_by_class['tool']:
+        for machine_det in detections_by_class['machine']:
+            if self.is_inside_or_overlapping(tool_det['bbox'], machine_det['bbox']):
+                condition_key = self.get_condition_key("tool_machine", tool_det, machine_det)
+                current_conditions.add(condition_key)
+                # ... rest of tracking logic
+```
+2. __Update condition logging__ (in the same method):
+```
+python
+elif "tool_machine" in condition_key:
+    overlap_info.append(f"tool in/overlapping machine (validated for {frames_elapsed} frames)")
+```
+### Modifying Output Behavior
+### Change clip duration:
+```
+python
+# In __init__ method
+self.clip_target_duration = 180  # 3 minutes total
+self.clip_before_duration = 90   # 1.5 minutes before
+self.clip_after_duration = 90    # 1.5 minutes after
+```
+### Modify output directory:
+```
+python
+# In __init__ method
+self.save_dir = "custom-output-folder"
+```
+### Adding New Output Formats
+Extend the saving logic in `process_detections()`:
+```
+python
+# Example: Save JSON metadata
+import json
+metadata = {
+    "timestamp": datetime.now().isoformat(),
+    "frame_number": current_frame_number,
+    "condition": condition_key,
+    "objects": object_details
+}
+metadata_filename = f"{filename_base}.json"
+with open(os.path.join(self.save_dir, metadata_filename), 'w') as f:
+    json.dump(metadata, f, indent=2)
+```
+## Performance Optimization
+### For Faster Processing:
+1. __Reduce input resolution__ in YOLO model
+2. __Lower confidence threshold__ to reduce false positives
+3. __Use batch processing__ for multiple frames (modify inference call)
+4. __Implement frame skipping__ for high-FPS videos
+### Memory Management:
+* Frames are processed and released immediately
+* Only clip frames are buffered temporarily
+* Model runs on GPU if available (automatic with ultralytics)

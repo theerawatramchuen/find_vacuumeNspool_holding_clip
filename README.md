@@ -38,3 +38,7 @@ When conditions persist for a configurable duration, the system saves:
 ### Step-by-Step Setup
 1. Clone/Download the code
 2. Install dependencies:
+```
+bash
+pip install ultralytics opencv-python pandas numpy
+```

@@ -15,18 +15,18 @@
 4. Troubleshooting
 ## 🎯 System Overview
 ## Purpose
-This system detects specific object interactions in video footage using YOLOv8 object detection. It monitors for three key conditions:
-1. Vacuum overlapping/inside Normal (vacuume_normal)
-2. Vacuum overlapping/inside Suspected (vacuume_suspected)
-3. Spool overlapping/inside Grove (spool_grove)
+This system detects specific object interactions in video footage using YOLO object detection. It monitors for three key conditions:
+1. __Vacuum overlapping/inside Normal__ (`vacuume_normal`)
+2. __Vacuum overlapping/inside Suspected__ (`vacuume_suspected`)
+3. __Spool overlapping/inside Grove__ (`spool_grove`)
 When conditions persist for a configurable duration, the system saves:
 * Original frame (no overlay)
 * Annotated frame (with bounding boxes)
 * 120-second video clip centered on the detection
 ## Key Features
-* Real-time Processing: Processes videos at maximum speed
-* Temporal Validation: Requires conditions to persist for a configurable time
-* Smart Restart: Resumes detection after saved clips to avoid duplicates
-* Multi-video Support: Processes all MP4 files in a folder sequentially
-* Visual Feedback: Live display with processing metrics
+* __Real-time Processing__: Processes videos at maximum speed
+* __Temporal Validation__: Requires conditions to persist for a configurable time
+* __Smart Restart__: Resumes detection after saved clips to avoid duplicates
+* __Multi-video Support__: Processes all MP4 files in a folder sequentially
+* __Visual Feedback__: Live display with processing metrics
 

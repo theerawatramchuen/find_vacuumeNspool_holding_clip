@@ -32,7 +32,6 @@ pip install flask
 # 3. Folder Structure (Expected)
 When the application runs, it creates two folders in the same directory as the script:
 ```
-text
 video_reviewer/
 ?ฤฤ app.py                     # The single-file Flask application
 ?ฤฤ input_vid/                 # Place videos to review here

@@ -16,36 +16,39 @@ The Video Review Tool is a lightweight, self-contained web server that:
 
 The entire application is contained in one Python file – no separate template files or complex configuration.
 
-2. Requirements & Dependencies
-Python 3.6 or newer
+# 2. Requirements & Dependencies
+* Python 3.6 or newer
 
-Flask – micro web framework
+* Flask – micro web framework
 
 All other modules used (os, shutil, mimetypes, time, sys, etc.) are part of the Python standard library.
 
 Install Flask with:
 
+```
 bash
 pip install flask
-3. Folder Structure (Expected)
+```
+# 3. Folder Structure (Expected)
 When the application runs, it creates two folders in the same directory as the script:
-
+```
 text
 video_reviewer/
 ?ฤฤ app.py                     # The single-file Flask application
 ?ฤฤ input_vid/                 # Place videos to review here
 ภฤฤ reviewed_vid/              # Reviewed videos are moved here (auto-created)
+```
 No additional folders are required. The input_vid folder must be populated with video files before starting the server.
 
-4. Architecture & Design
-4.1. Overview
+# 4. Architecture & Design
+## 4.1. Overview
 The application follows a classic Flask pattern:
 
-Routes handle page rendering, file moves, and video streaming.
+* Routes handle page rendering, file moves, and video streaming.
 
-Helper functions manage file operations, path security, and retry logic.
+* Helper functions manage file operations, path security, and retry logic.
 
-HTML template is embedded as a multi-line string and rendered with render_template_string.
+* HTML template is embedded as a multi-line string and rendered with render_template_string.
 
 4.2. Key Components
 Component	Description

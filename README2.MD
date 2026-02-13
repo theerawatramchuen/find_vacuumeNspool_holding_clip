@@ -49,19 +49,19 @@ The application follows a classic Flask pattern:
 
 * HTML template is embedded as a multi-line string and rendered with render_template_string.
 
-# 4.2. Key Components
+## 4.2. Key Components
 | Component | Description |
 | :--- | :--- |
 | `INDEX_HTML` | Bootstrap UI with two columns, embedded video players, action buttons, and flash messages. |
 | `get_video_list()` | Scans a folder and returns sorted list of video files (based on extension). |
 | `safe_path()`	| Prevents directory traversal by combining secure_filename and commonpath checks. |
 | `move_with_retry()` |	Attempts to move a file; retries up to 5 times with exponential backoff if file is locked. |
-open_video_file_for_streaming()	Opens a file with FILE_SHARE_DELETE on Windows (allows move while open).
-/	Main page – renders the UI with current video lists.
-/review/<filename>	Moves a video from input_vid to reviewed_vid.
-/revert/<filename>	Moves a video from reviewed_vid back to input_vid.
-/video/<folder>/<filename>	Streams a video with HTTP Range support; uses the special file-open method.
-4.3. Why a Single File?
+| `open_video_file_for_streaming()`	| Opens a file with FILE_SHARE_DELETE on Windows (allows move while open). |
+| `/`	| Main page – renders the UI with current video lists. |
+| `/review/<filename>` | Moves a video from input_vid to reviewed_vid. |
+| `/revert/<filename>` | Moves a video from reviewed_vid back to input_vid. |
+| `/video/<folder>/<filename>` | Streams a video with HTTP Range support; uses the special file-open method. |
+## 4.3. Why a Single File?
 Keeping the application in a single file simplifies deployment, modification, and version control. The embedded HTML string can be easily extracted into a separate templates/ folder if the project grows.
 
 5. Code Walkthrough

@@ -49,7 +49,12 @@ The application follows a classic Flask pattern:
 
 * HTML template is embedded as a multi-line string and rendered with render_template_string.
 
-4.2. Key Components
+# 4.2. Key Components
+| Component | Description |
+| :--- | :--- |
+| `INDEX_HTML` | Bootstrap UI with two columns, embedded video players, action buttons, and flash messages. |
+| `get_video_list()` | Scans a folder and returns sorted list of video files (based on extension). |
+
 Component	Description
 INDEX_HTML	Bootstrap UI with two columns, embedded video players, action buttons, and flash messages.
 get_video_list()	Scans a folder and returns sorted list of video files (based on extension).

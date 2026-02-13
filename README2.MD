@@ -132,32 +132,32 @@ Symmetrical to /review/, but moves from REVIEWED_FOLDER to INPUT_FOLDER.
 * Uses the file handle returned by open_video_file_for_streaming() to allow concurrent move operations.
 
 ## 5.4. HTML Template (INDEX_HTML)
-Bootstrap 5 layout, two columns.
+* Bootstrap 5 layout, two columns.
 
-Each video is shown inside a .video-card with its filename, a <video> tag, and an action button.
+* Each video is shown inside a .video-card with its filename, a <video> tag, and an action button.
 
-Action buttons trigger a JavaScript confirmation dialog before navigating.
+* Action buttons trigger a JavaScript confirmation dialog before navigating.
 
-Flash messages are displayed as dismissible Bootstrap alerts.
+* Flash messages are displayed as dismissible Bootstrap alerts.
 
-A small hint warns users to stop video playback before clicking the button.
+* A small hint warns users to stop video playback before clicking the button.
 
-6. Running the Application
+# 6. Running the Application
 Place video files in the input_vid/ folder (create it if it doesn’t exist).
 
 Run the script:
-
+```
 bash
 python app.py
 Open a web browser at http://localhost:5000.
-
+```
 The server listens on all interfaces (0.0.0.0) by default. To change the port, modify app.run(port=...).
 
-7. Key Features Explained
-7.1. HTTP Range (Seekable Video)
+# 7. Key Features Explained
+## 7.1. HTTP Range (Seekable Video)
 The /video/... endpoint parses the Range header and returns 206 Partial Content. This allows browsers to seek forward/backward in the video and load only the required byte ranges. The implementation is lightweight and compatible with all modern browsers.
 
-7.2. “File in Use” Resilience
+## 7.2. “File in Use” Resilience
 On Windows, browsers may keep a handle open on a video file while it is being played. The application counters this with two strategies:
 
 Retry logic – if a move fails due to a locked file, it tries again after a short delay.
@@ -166,12 +166,12 @@ FILE_SHARE_DELETE flag – while streaming, the file is opened with sharing perm
 
 These two mechanisms together make it highly unlikely that a user will encounter a “file in use” error, even if they click the button while the video is playing.
 
-7.3. Security
+## 7.3. Security
 secure_filename sanitises user-supplied filenames, removing path separators and other dangerous characters.
 
 safe_path verifies that the resolved absolute path is still inside the intended base folder, preventing directory traversal attacks.
 
-8. API Reference
+# 8. API Reference
 Endpoint	Method	Description
 /	GET	Renders main page.
 /review/<filename>	GET	Moves file from input_vid to reviewed_vid. Redirects to /.
@@ -179,85 +179,85 @@ Endpoint	Method	Description
 /video/<folder>/<filename>	GET	Streams video file with support for Range header. folder must be input_vid or reviewed_vid.
 All endpoints expect filename to be URL-encoded (Flask handles this automatically).
 
-9. Customization & Configuration
-9.1. Changing Folder Names
+# 9. Customization & Configuration
+## 9.1. Changing Folder Names
 Edit INPUT_FOLDER and REVIEWED_FOLDER at the top of the script.
 
-9.2. Adding/Removing Video Formats
+## 9.2. Adding/Removing Video Formats
 Modify the VIDEO_EXTENSIONS set. Example:
 
 python
 VIDEO_EXTENSIONS = {'.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv'}
-9.3. Adjusting Retry Behaviour
+## 9.3. Adjusting Retry Behaviour
 Change the max_retries and delay parameters in the calls to move_with_retry() inside the route functions.
 
-9.4. Switching to External Template
+## 9.4. Switching to External Template
 To move the HTML to a separate file:
 
-Create a templates/ folder.
+* Create a templates/ folder.
 
-Save the INDEX_HTML string as index.html inside it.
+* Save the INDEX_HTML string as index.html inside it.
 
-Replace render_template_string(INDEX_HTML, ...) with render_template('index.html', ...).
+* Replace render_template_string(INDEX_HTML, ...) with render_template('index.html', ...).
 
-Import render_template from Flask.
+* Import render_template from Flask.
 
-10. Future Development Ideas
+# 10. Future Development Ideas
 The following enhancements are planned or could be implemented:
 
-10.1. User Authentication
+## 10.1. User Authentication
 Add login pages and user roles (e.g., reviewer, admin) to restrict access.
 
-10.2. Database Backend
+## 10.2. Database Backend
 Replace filesystem scanning with a SQLite/PostgreSQL database to store video metadata, review status, timestamps, and user comments.
 
-10.3. Batch Operations
+## 10.3. Batch Operations
 Allow selecting multiple videos and marking them as reviewed / revert all at once.
 
-10.4. Search & Filter
+## 10.4. Search & Filter
 Add a search bar and filter by filename, date, or custom tags.
 
-10.5. Video Thumbnails
+## 10.5. Video Thumbnails
 Generate thumbnails using ffmpeg or OpenCV and display them instead of the full video player (improves performance for large libraries).
 
-10.6. Progress Indicator
+## 10.6. Progress Indicator
 Show a spinner while moving large files, or use AJAX to avoid full page reloads.
 
-10.7. Configuration File
+## 10.7. Configuration File
 Move folder paths, retry settings, and video extensions into a separate config.py or .env file.
 
-10.8. Unit Tests
+## 10.8. Unit Tests
 Write tests using pytest and Flask’s test client to verify file operations and streaming.
 
-10.9. Docker Deployment
+## 10.9. Docker Deployment
 Provide a Dockerfile for containerised deployment.
 
-10.10. Asynchronous Processing
+## 10.10. Asynchronous Processing
 Use asyncio or a task queue (Celery) for moving large files without blocking the web server.
 
-11. Troubleshooting
+# 11. Troubleshooting
 Problem	Likely Cause	Solution
 [WinError 32] after retries	File is still open in another process (e.g., media player, antivirus).	Stop the video playback, wait a moment, try again. Use the retry hint in the UI.
 Videos do not play / only show black screen	Incorrect MIME type or unsupported codec.	Ensure the file extension is in VIDEO_EXTENSIONS. Try a different browser.
 FileNotFoundError when moving	Race condition – file was deleted/moved elsewhere.	Refresh the page and try again.
 Page does not load / connection refused	Port 5000 already in use.	Change the port in app.run(port=5001) or stop the other process.
 Directory traversal vulnerability warning	safe_path() check failed.	Ensure filenames do not contain ../ or other path sequences. secure_filename removes them.
-12. Contributing
+# 12. Contributing
 To contribute:
 
-Fork the repository.
+* Fork the repository.
 
-Create a feature branch.
+* Create a feature branch.
 
-Make changes, keeping the code style consistent (PEP 8).
+* Make changes, keeping the code style consistent (PEP 8).
 
-Update this documentation if necessary.
+* Update this documentation if necessary.
 
-Submit a pull request.
+* Submit a pull request.
 
-All contributions are welcome – bug fixes, new features, or documentation improvements.
+* All contributions are welcome – bug fixes, new features, or documentation improvements.
 
-13. License
+# 13. License
 This project is open-source and available under the MIT License. Feel free to use, modify, and distribute it.
 
 Document version 1.0 – February 2026

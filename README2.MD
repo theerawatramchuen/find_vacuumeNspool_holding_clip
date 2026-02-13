@@ -33,9 +33,9 @@ pip install flask
 When the application runs, it creates two folders in the same directory as the script:
 ```
 video_reviewer/
-?ฤฤ app.py                     # The single-file Flask application
-?ฤฤ input_vid/                 # Place videos to review here
-ภฤฤ reviewed_vid/              # Reviewed videos are moved here (auto-created)
+├── app.py                     # The single‑file Flask application
+├── input_vid/                 # Place videos to review here
+└── reviewed_vid/              # Reviewed videos are moved here (auto‑created)
 ```
 No additional folders are required. The input_vid folder must be populated with video files before starting the server.
 

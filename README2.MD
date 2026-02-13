@@ -237,7 +237,7 @@ Provide a `Dockerfile` for containerised deployment.
 Use `asyncio` or a task queue (Celery) for moving large files without blocking the web server.
 
 # 11. Troubleshooting
-Problem	Likely Cause	Solution
+| Problem | Likely Cause | Solution
 | :--- | :--- | :--- |
 | [WinError 32] after retries |	File is still open in another process (e.g., media player, antivirus). | Stop the video playback, wait a moment, try again. Use the retry hint in the UI. |
 Videos do not play / only show black screen	Incorrect MIME type or unsupported codec.	Ensure the file extension is in VIDEO_EXTENSIONS. Try a different browser.

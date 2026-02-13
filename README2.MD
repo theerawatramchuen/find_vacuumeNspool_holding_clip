@@ -240,10 +240,10 @@ Use `asyncio` or a task queue (Celery) for moving large files without blocking t
 | Problem | Likely Cause | Solution
 | :--- | :--- | :--- |
 | [WinError 32] after retries |	File is still open in another process (e.g., media player, antivirus). | Stop the video playback, wait a moment, try again. Use the retry hint in the UI. |
-Videos do not play / only show black screen	Incorrect MIME type or unsupported codec.	Ensure the file extension is in VIDEO_EXTENSIONS. Try a different browser.
-FileNotFoundError when moving	Race condition – file was deleted/moved elsewhere.	Refresh the page and try again.
-Page does not load / connection refused	Port 5000 already in use.	Change the port in app.run(port=5001) or stop the other process.
-Directory traversal vulnerability warning	safe_path() check failed.	Ensure filenames do not contain ../ or other path sequences. secure_filename removes them.
+| Videos do not play / only show black screen | Incorrect MIME type or unsupported codec. | Ensure the file extension is in VIDEO_EXTENSIONS. Try a different browser. |
+| FileNotFoundError when moving | Race condition – file was deleted/moved elsewhere. | Refresh the page and try again. |
+| Page does not load / connection refused	| Port 5000 already in use.	| Change the port in app.run(port=5001) or stop the other process. |
+| Directory traversal vulnerability warning	| safe_path() check failed.	| Ensure filenames do not contain ../ or other path sequences. secure_filename removes them. |
 # 12. Contributing
 To contribute:
 

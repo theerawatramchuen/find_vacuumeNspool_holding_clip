@@ -4,15 +4,15 @@ This document provides a comprehensive overview of the Video Review Tool, a sing
 ## 1. Introduction
 The Video Review Tool is a lightweight, self-contained web server that:
 
-Serves video files from two directories: input_vid (videos awaiting review) and reviewed_vid (videos already reviewed).
+* Serves video files from two directories: input_vid (videos awaiting review) and reviewed_vid (videos already reviewed).
 
-Provides a clean Bootstrap-based UI with embedded <video> players.
+* Provides a clean Bootstrap-based UI with embedded <video> players.
 
-Allows users to move a video from input_vid to reviewed_vid (mark as reviewed) or revert it back.
+* Allows users to move a video from input_vid to reviewed_vid (mark as reviewed) or revert it back.
 
-Implements HTTP Range requests so videos are seekable and streaming works like a local file.
+* Implements HTTP Range requests so videos are seekable and streaming works like a local file.
 
-Includes a retry mechanism and Windows-specific file-sharing flags to avoid “file in use” errors when moving files that are still being streamed.
+* Includes a retry mechanism and Windows-specific file-sharing flags to avoid “file in use” errors when moving files that are still being streamed.
 
 The entire application is contained in one Python file – no separate template files or complex configuration.
 

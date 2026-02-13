@@ -107,13 +107,13 @@ Attempts shutil.move; on OSError (e.g. Windows error 32) it waits and retries wi
 Calls get_video_list for both folders, renders INDEX_HTML with the two lists.
 
 `@app.route('/review/<path:filename>')`
-Builds source path in INPUT_FOLDER, destination in REVIEWED_FOLDER.
+* Builds source path in INPUT_FOLDER, destination in REVIEWED_FOLDER.
 
-Calls move_with_retry.
+* Calls move_with_retry.
 
-Flashes success or error message.
+* Flashes success or error message.
 
-Redirects to index.
+* Redirects to index.
 
 @app.route('/revert/<path:filename>')
 Symmetrical to /review/, but moves from REVIEWED_FOLDER to INPUT_FOLDER.

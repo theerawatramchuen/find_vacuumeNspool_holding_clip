@@ -62,51 +62,51 @@ The application follows a classic Flask pattern:
 | `/revert/<filename>` | Moves a video from reviewed_vid back to input_vid. |
 | `/video/<folder>/<filename>` | Streams a video with HTTP Range support; uses the special file-open method. |
 ## 4.3. Why a Single File?
-Keeping the application in a single file simplifies deployment, modification, and version control. The embedded HTML string can be easily extracted into a separate templates/ folder if the project grows.
+Keeping the application in a single file simplifies deployment, modification, and version control. The embedded HTML string can be easily extracted into a separate `templates/` folder if the project grows.
 
-5. Code Walkthrough
-5.1. Imports & Configuration
-Flask, render_template_string, request, redirect, url_for, flash, abort, send_file, Response – core Flask components.
+# 5. Code Walkthrough
+## 5.1. Imports & Configuration
+* `Flask`, `render_template_string`, `request`, `redirect`, `url_for`, `flash`, `abort`, `send_file`, `Response` – core Flask components.
 
-secure_filename from Werkzeug – sanitises user-supplied filenames.
+* `secure_filename` from Werkzeug – sanitises user-supplied filenames.
 
-mimetypes – guesses MIME type for video files.
+* `mimetypes` – guesses MIME type for video files.
 
-shutil – moves files.
+* `shutil` – moves files.
 
-time – used in retry delays.
+* `time` – used in retry delays.
 
-sys – detects Windows platform.
+* `sys` – detects Windows platform.
 
 Constants:
 
-INPUT_FOLDER, REVIEWED_FOLDER – directory names.
+* INPUT_FOLDER, REVIEWED_FOLDER – directory names.
 
-VIDEO_EXTENSIONS – supported file extensions.
+* VIDEO_EXTENSIONS – supported file extensions.
 
-5.2. Helper Functions
-is_video_file(filename)
+## 5.2. Helper Functions
+`is_video_file(filename)`
 Checks extension against VIDEO_EXTENSIONS.
 
-get_video_list(folder)
+`get_video_list(folder)`
 Returns sorted list of video files in the given folder.
 
-safe_path(base_dir, filename)
+`safe_path(base_dir, filename)`
 Ensures the resolved absolute path is still inside base_dir. Uses os.path.commonpath.
 
-move_with_retry(src, dst, max_retries=5, delay=0.5)
+`move_with_retry(src, dst, max_retries=5, delay=0.5)`
 Attempts shutil.move; on OSError (e.g. Windows error 32) it waits and retries with doubled delay. Raises the final exception if all attempts fail.
 
-open_video_file_for_streaming(file_path)
-Windows: opens with os.O_RDONLY | os.O_BINARY and, if available, os.O_SHARE_DELETE. This allows the file to be renamed/moved while the handle is still open.
+`open_video_file_for_streaming(file_path)`
+* Windows: opens with os.O_RDONLY | os.O_BINARY and, if available, os.O_SHARE_DELETE. This allows the file to be renamed/moved while the handle is still open.
 
-Other platforms: normal open().
+* Other platforms: normal open().
 
-5.3. Routes
-@app.route('/')
+## 5.3. Routes
+`@app.route('/')`
 Calls get_video_list for both folders, renders INDEX_HTML with the two lists.
 
-@app.route('/review/<path:filename>')
+`@app.route('/review/<path:filename>')`
 Builds source path in INPUT_FOLDER, destination in REVIEWED_FOLDER.
 
 Calls move_with_retry.
@@ -119,19 +119,19 @@ Redirects to index.
 Symmetrical to /review/, but moves from REVIEWED_FOLDER to INPUT_FOLDER.
 
 @app.route('/video/<folder>/<path:filename>')
-Validates folder is either 'input_vid' or 'reviewed_vid'.
+* Validates folder is either 'input_vid' or 'reviewed_vid'.
 
-Resolves file path with safe_path.
+* Resolves file path with safe_path.
 
-Determines file size and MIME type.
+* Determines file size and MIME type.
 
-If no Range header, serves the entire file with send_file.
+* If no Range header, serves the entire file with send_file.
 
-If Range header exists, parses start and optional end byte, then streams a 206 Partial Content response.
+* If Range header exists, parses start and optional end byte, then streams a 206 Partial Content response.
 
-Uses the file handle returned by open_video_file_for_streaming() to allow concurrent move operations.
+* Uses the file handle returned by open_video_file_for_streaming() to allow concurrent move operations.
 
-5.4. HTML Template (INDEX_HTML)
+## 5.4. HTML Template (INDEX_HTML)
 Bootstrap 5 layout, two columns.
 
 Each video is shown inside a .video-card with its filename, a <video> tag, and an action button.

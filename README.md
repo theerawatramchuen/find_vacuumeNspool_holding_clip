@@ -49,6 +49,7 @@ pip install ultralytics opencv-python pandas numpy
 3. Download YOLO model:
 * Place your trained model at: `C:\Users\RYZEN\cctv_mon\project_yolov11_obb\runs\detect\train3\weights\best.pt`
 * Or modify MODEL_PATH in the main section
+* Or unzip best.7z001 - 009 in weight folder to get "best.pt"
 ## Configuration
 Edit these parameters in the main section (lines 308-313):
 ```

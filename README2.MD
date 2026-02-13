@@ -54,12 +54,8 @@ The application follows a classic Flask pattern:
 | :--- | :--- |
 | `INDEX_HTML` | Bootstrap UI with two columns, embedded video players, action buttons, and flash messages. |
 | `get_video_list()` | Scans a folder and returns sorted list of video files (based on extension). |
-
-Component	Description
-INDEX_HTML	Bootstrap UI with two columns, embedded video players, action buttons, and flash messages.
-get_video_list()	Scans a folder and returns sorted list of video files (based on extension).
-safe_path()	Prevents directory traversal by combining secure_filename and commonpath checks.
-move_with_retry()	Attempts to move a file; retries up to 5 times with exponential backoff if file is locked.
+| `safe_path()`	| Prevents directory traversal by combining secure_filename and commonpath checks. |
+| `move_with_retry()` |	Attempts to move a file; retries up to 5 times with exponential backoff if file is locked. |
 open_video_file_for_streaming()	Opens a file with FILE_SHARE_DELETE on Windows (allows move while open).
 /	Main page – renders the UI with current video lists.
 /review/<filename>	Moves a video from input_vid to reviewed_vid.

@@ -167,9 +167,9 @@ On Windows, browsers may keep a handle open on a video file while it is being pl
 These two mechanisms together make it highly unlikely that a user will encounter a “file in use” error, even if they click the button while the video is playing.
 
 ## 7.3. Security
-secure_filename sanitises user-supplied filenames, removing path separators and other dangerous characters.
+* `secure_filename` sanitises user-supplied filenames, removing path separators and other dangerous characters.
 
-safe_path verifies that the resolved absolute path is still inside the intended base folder, preventing directory traversal attacks.
+* `safe_path` verifies that the resolved absolute path is still inside the intended base folder, preventing directory traversal attacks.
 
 # 8. API Reference
 Endpoint	Method	Description
@@ -181,26 +181,27 @@ All endpoints expect filename to be URL-encoded (Flask handles this automaticall
 
 # 9. Customization & Configuration
 ## 9.1. Changing Folder Names
-Edit INPUT_FOLDER and REVIEWED_FOLDER at the top of the script.
+Edit `INPUT_FOLDER` and `REVIEWED_FOLDER` at the top of the script.
 
 ## 9.2. Adding/Removing Video Formats
-Modify the VIDEO_EXTENSIONS set. Example:
-
+Modify the `VIDEO_EXTENSIONS` set. Example:
+```
 python
 VIDEO_EXTENSIONS = {'.mp4', '.webm', '.mov', '.avi', '.mkv', '.flv'}
+```
 ## 9.3. Adjusting Retry Behaviour
-Change the max_retries and delay parameters in the calls to move_with_retry() inside the route functions.
+Change the `max_retries` and `delay` parameters in the calls to `move_with_retry()` inside the route functions.
 
 ## 9.4. Switching to External Template
 To move the HTML to a separate file:
 
-* Create a templates/ folder.
+* Create a `templates/` folder.
 
-* Save the INDEX_HTML string as index.html inside it.
+* Save the `INDEX_HTML` string as `index.html` inside it.
 
-* Replace render_template_string(INDEX_HTML, ...) with render_template('index.html', ...).
+* Replace `render_template_string(INDEX_HTML, ...)` with `render_template('index.html', ...).`
 
-* Import render_template from Flask.
+* Import `render_template` from Flask.
 
 # 10. Future Development Ideas
 The following enhancements are planned or could be implemented:
@@ -218,26 +219,27 @@ Allow selecting multiple videos and marking them as reviewed / revert all at onc
 Add a search bar and filter by filename, date, or custom tags.
 
 ## 10.5. Video Thumbnails
-Generate thumbnails using ffmpeg or OpenCV and display them instead of the full video player (improves performance for large libraries).
+Generate thumbnails using `ffmpeg` or OpenCV and display them instead of the full video player (improves performance for large libraries).
 
 ## 10.6. Progress Indicator
 Show a spinner while moving large files, or use AJAX to avoid full page reloads.
 
 ## 10.7. Configuration File
-Move folder paths, retry settings, and video extensions into a separate config.py or .env file.
+Move folder paths, retry settings, and video extensions into a separate `config.py` or `.env` file.
 
 ## 10.8. Unit Tests
-Write tests using pytest and Flask’s test client to verify file operations and streaming.
+Write tests using `pytest` and Flask’s test client to verify file operations and streaming.
 
 ## 10.9. Docker Deployment
-Provide a Dockerfile for containerised deployment.
+Provide a `Dockerfile` for containerised deployment.
 
 ## 10.10. Asynchronous Processing
-Use asyncio or a task queue (Celery) for moving large files without blocking the web server.
+Use `asyncio` or a task queue (Celery) for moving large files without blocking the web server.
 
 # 11. Troubleshooting
 Problem	Likely Cause	Solution
-[WinError 32] after retries	File is still open in another process (e.g., media player, antivirus).	Stop the video playback, wait a moment, try again. Use the retry hint in the UI.
+| :--- | :--- | :--- |
+| [WinError 32] after retries |	File is still open in another process (e.g., media player, antivirus). | Stop the video playback, wait a moment, try again. Use the retry hint in the UI. |
 Videos do not play / only show black screen	Incorrect MIME type or unsupported codec.	Ensure the file extension is in VIDEO_EXTENSIONS. Try a different browser.
 FileNotFoundError when moving	Race condition – file was deleted/moved elsewhere.	Refresh the page and try again.
 Page does not load / connection refused	Port 5000 already in use.	Change the port in app.run(port=5001) or stop the other process.

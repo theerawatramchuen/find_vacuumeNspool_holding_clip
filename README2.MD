@@ -172,11 +172,12 @@ These two mechanisms together make it highly unlikely that a user will encounter
 * `safe_path` verifies that the resolved absolute path is still inside the intended base folder, preventing directory traversal attacks.
 
 # 8. API Reference
-Endpoint	Method	Description
-/	GET	Renders main page.
-/review/<filename>	GET	Moves file from input_vid to reviewed_vid. Redirects to /.
-/revert/<filename>	GET	Moves file from reviewed_vid to input_vid. Redirects to /.
-/video/<folder>/<filename>	GET	Streams video file with support for Range header. folder must be input_vid or reviewed_vid.
+| Endpoint	| Method	| Description |
+| :--- | :--- | :--- |
+| /	| GET	| Renders main page. |
+| /review/<filename>	| GET	| Moves file from input_vid to reviewed_vid. Redirects to /. |
+| /revert/<filename>	| GET	| Moves file from reviewed_vid to input_vid. Redirects to /. |
+| /video/<folder>/<filename> | GET	| Streams video file with support for Range header. folder must be input_vid or reviewed_vid. |
 All endpoints expect filename to be URL-encoded (Flask handles this automatically).
 
 # 9. Customization & Configuration

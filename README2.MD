@@ -33,7 +33,7 @@ pip install flask
 When the application runs, it creates two folders in the same directory as the script:
 ```
 video_reviewer/
-├── app.py                     # The single‑file Flask application
+├── video_reviewer.py                     # The single‑file Flask application
 ├── input_vid/                 # Place videos to review here
 └── reviewed_vid/              # Reviewed videos are moved here (auto‑created)
 ```
@@ -148,7 +148,7 @@ Place video files in the input_vid/ folder (create it if it doesn’t exist).
 Run the script:
 ```
 bash
-python app.py
+python video_reviewer.py
 Open a web browser at http://localhost:5000.
 ```
 The server listens on all interfaces (0.0.0.0) by default. To change the port, modify app.run(port=...).

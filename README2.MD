@@ -160,9 +160,9 @@ The /video/... endpoint parses the Range header and returns 206 Partial Content.
 ## 7.2. “File in Use” Resilience
 On Windows, browsers may keep a handle open on a video file while it is being played. The application counters this with two strategies:
 
-Retry logic – if a move fails due to a locked file, it tries again after a short delay.
+* Retry logic – if a move fails due to a locked file, it tries again after a short delay.
 
-FILE_SHARE_DELETE flag – while streaming, the file is opened with sharing permissions that allow deletion/renaming. This flag is available on Windows (via os.O_SHARE_DELETE).
+* FILE_SHARE_DELETE flag – while streaming, the file is opened with sharing permissions that allow deletion/renaming. This flag is available on Windows (via os.O_SHARE_DELETE).
 
 These two mechanisms together make it highly unlikely that a user will encounter a “file in use” error, even if they click the button while the video is playing.
 

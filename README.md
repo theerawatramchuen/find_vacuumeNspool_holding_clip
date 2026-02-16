@@ -1,8 +1,10 @@
 # Video Detection System Documentation
 ## find_vacuumeNspool_holding_clip
 <img width="638" height="664" alt="image" src="https://github.com/user-attachments/assets/6b837ced-6801-4d1b-959a-4fb26f98c84b" />
+
 ## python video_reviewer.py
 <img width="1365" height="767" alt="image" src="https://github.com/user-attachments/assets/fea4581e-31c3-459a-ac96-87165e96526b" />
+
 ## python video_reviewer_2.py
 <img width="1346" height="1031" alt="image" src="https://github.com/user-attachments/assets/d3983fdb-b29a-4aa0-9b65-d2b5faa7b01d" />
 

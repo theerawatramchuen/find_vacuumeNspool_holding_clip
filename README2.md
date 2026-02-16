@@ -1,4 +1,4 @@
-# Video Review Application – Developer Documentation
+# Video Review Application – Developer Documentation 
 This document provides a comprehensive overview of the Video Review Tool, a single-file Flask web application that allows users to review video footage, move files between folders, and revert changes. It is intended for developers who want to understand, maintain, or extend the application.
 
 ## 1. Introduction
